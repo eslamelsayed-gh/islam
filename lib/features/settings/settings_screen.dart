@@ -140,7 +140,7 @@ class SettingsScreen extends ConsumerWidget {
       ],
     );
 
-    if (widget.embedded) return body;
+    if (embedded) return body;
     return Scaffold(appBar: AppBar(title: const Text('الإعدادات')), body: body);
   }
 }
