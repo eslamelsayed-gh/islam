@@ -1,0 +1,51 @@
+name: Build Islam APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Create Android project
+        run: flutter create . --project-name islam_app --org app.islam
+
+      - name: Fetch Quran and Tafsir from official source
+        run: |
+          python3 tool/generate_quran_data.py || echo "Using bundled verified data"
+
+      - name: Inject INTERNET permission
+        run: |
+          python3 - <<'PYEOF'
+          p = 'android/app/src/main/AndroidManifest.xml'
+          s = open(p, encoding='utf-8').read()
+          perm = '<uses-permission android:name="android.permission.INTERNET"/>'
+          if perm not in s:
+              s = s.replace('<application', perm + '\n    <application', 1)
+          open(p, 'w', encoding='utf-8').write(s)
+          print('Manifest ready')
+          PYEOF
+
+      - run: flutter pub get
+      - run: dart run flutter_launcher_icons
+      - run: flutter build apk --release
+      - run: flutter build appbundle --release || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: islam-app-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
