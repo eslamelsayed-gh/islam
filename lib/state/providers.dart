@@ -194,7 +194,7 @@ class KhatmahNotifier extends StateNotifier<Khatmah?> {
       title: k.title,
       startDateMs: k.startDateMs,
       targetDateMs: k.targetDateMs,
-      pagesRead: (k.pagesRead + n).clamp(0, 604),
+      pagesRead: (k.pagesRead + n).clamp(0.0, 604.0),
       active: k.active,
     );
     _persist();
