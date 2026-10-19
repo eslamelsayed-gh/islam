@@ -69,7 +69,7 @@ class AppTheme {
         bodyLarge: TextStyle(fontSize: 16, color: ink, height: 1.8),
         bodyMedium: TextStyle(fontSize: 14, color: muted, height: 1.7),
       ),
-      appBarTheme: AppBarTheme(
+      appBarTheme: AppBarThemeData(
         backgroundColor: Colors.transparent,
         foregroundColor: ink,
         elevation: 0,
@@ -80,7 +80,7 @@ class AppTheme {
       ),
       bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Colors.transparent, elevation: 0),
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: card,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
