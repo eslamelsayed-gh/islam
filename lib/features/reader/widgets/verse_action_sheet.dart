@@ -54,8 +54,7 @@ class _VerseActionSheetState extends ConsumerState<VerseActionSheet> {
   @override
   void initState() {
     super.initState();
-    _noteCtrl = TextEditingController(ref.read(notesProvider)[verse.key] ?? '');
-  }
+   _noteCtrl = TextEditingController(text: ref.read(notesProvider)[verse.key] ?? '');  }
 
   @override
   void dispose() {
